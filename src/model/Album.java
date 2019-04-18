@@ -13,6 +13,7 @@ public class Album {
 	private String genre;
 	private String label;
 	private String length;
+	private int rating;
 	private Image image;
 	private List<String> songs;
 	
@@ -90,5 +91,13 @@ public class Album {
 
 	public void setImage(Image image) {
 		this.image = image;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 }
