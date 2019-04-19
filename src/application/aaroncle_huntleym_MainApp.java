@@ -92,6 +92,10 @@ public class aaroncle_huntleym_MainApp extends Application {
 			art.setImage(p.getImage());
 			shrinkImage(art);
 			
+			//USE THIS FOR IMAGE ACCESSIBILITY ON CENTER PANE
+			//art.setAccessibleText("Image of the album art for " + p.getName() + " by " + p.getArtist());
+			//art.setFocusTraversable(true);
+			
 			title.setText(p.getName());
 			artist.setText("by " + p.getArtist());
 			
