@@ -14,7 +14,6 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Album;
@@ -23,8 +22,8 @@ import model.AlbumList;
 
 public class aaroncle_huntleym_MainApp extends Application {
 	
+	private AlbumPageController controller;
 	private ListView<Album> list;
-	
 	private Album currentAlbum;
 	
 	@Override
@@ -79,8 +78,7 @@ public class aaroncle_huntleym_MainApp extends Application {
 		
 		list.getSelectionModel().selectedItemProperty().addListener((obValue, oldVal, newVal)-> {
 			System.out.println("Selected: " + newVal.getName());
-			// TODO: Make values on right change when clicked by:
-			// Calling method to change information that takes in in newVal as the Album to base info off of
+			controller.setValues(newVal);
 		});
 		list.getSelectionModel().selectFirst();
 		list.setCellFactory(l -> new AlbumCell());
