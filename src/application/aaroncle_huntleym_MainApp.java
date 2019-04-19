@@ -24,11 +24,11 @@ public class aaroncle_huntleym_MainApp extends Application {
 	public void start(Stage primaryStage) {
 		list = new ListView<>();
 		setUpListView();
+		list.setPrefWidth(300);
+		list.setPrefHeight(300);
 		
 		Pane mainPane = new Pane();
 		mainPane.getChildren().add(list);
-		list.setPrefWidth(300);
-		list.setPrefHeight(300);
 
 		Scene myScene = new Scene(mainPane,720,480);
 		primaryStage.setScene(myScene);
