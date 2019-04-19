@@ -81,7 +81,7 @@ public class AlbumList {
 		s3.add("The Man with the Child in His Eyes");
 		a3.setSongs(s3);
 		
-		a4.setName("In the Court of the Crimson King");
+		a4.setName("In the Court of the C.K.");
 		a4.setDescription("In the Court of the Crimson King (subtitled An Observation by King Crimson) is the debut album from the English rock band King Crimson, released on 10 October 1969 on Island Records in England and Atlantic Records in America. The album is one of the first and most influential of the progressive rock genre, where the band largely departed from the blues influences that rock music was founded upon and combined elements of jazz, classical, and symphonic music.");
 		a4.setArtist("King Crimson");
 		a4.setYear(1969);
