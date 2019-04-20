@@ -103,9 +103,9 @@ public class aaroncle_huntleym_MainApp extends Application {
 			label = new VBox();
 			art = new ImageView();
 			title = new Label();
-			title.setStyle("-fx-font-size: 20; -fx-font-weight: bold;");
+			title.setStyle("-fx-font-size: 15; -fx-font-weight: bold;");
 			artist = new Label();
-			artist.setStyle("-fx-font-size: 14; -fx-font-style: italic;");
+			artist.setStyle("-fx-font-size: 10; -fx-font-style: italic;");
 			row.getChildren().addAll(art,label);
 			label.getChildren().addAll(title, artist);
 		}

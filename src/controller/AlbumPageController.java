@@ -3,16 +3,24 @@ package controller;
 import java.util.stream.Collectors;
 
 import application.aaroncle_huntleym_MainApp;
+//import application.aaroncle_huntleym_MainApp.AlbumCell;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Album;
+import model.AlbumList;
 
 public class AlbumPageController {
 	private aaroncle_huntleym_MainApp myGame; //reference to the main application
@@ -116,12 +124,13 @@ public class AlbumPageController {
     		
     		//ok button -- saves and closes so they can add another album
     		okBtn.setOnAction(ae -> {
-    			
+    			saveEdits();
+    			closeView();
     		});
     		
     		//cancel button -- just closes
     		cancelBtn.setOnAction(ae -> {
-    			
+    			closeView();
     		});
     }
     
@@ -129,41 +138,107 @@ public class AlbumPageController {
     		//grab values of everything and save it
     }
     
-    
-    
-    public void setAlbumList(ListView<Album> albums) {
-    		albumList.setItems(albums.getItems());
+    private void closeView() {
+    	
     }
     
     public void setValues(Album currentAlbum) {
-    		//set album image
-    		albumImg.setImage(currentAlbum.getImage());
-    	
+		//set album image
+		albumImg.setImage(currentAlbum.getImage());
+		albumImg.setAccessibleText("Image of the album art for " + currentAlbum.getName() + " by " + currentAlbum.getArtist());
+		albumImg.setFocusTraversable(true);
+	
 		//set name field
-    		nameField.setText(currentAlbum.getName());
-	
+		nameField.setText(currentAlbum.getName());
+
 		//set description field
-    		descriptionField.setText(currentAlbum.getDescription());
-	
+		descriptionField.setText(currentAlbum.getDescription());
+
 		//set artist field
-    		artistField.setText(currentAlbum.getArtist());
-	
+		artistField.setText(currentAlbum.getArtist());
+
 		//set year released
-    		yearDropdown.setValue(Integer.toString(currentAlbum.getYear()));
-    	
-    		//set genre field
-    		genreField.setText(currentAlbum.getGenre());
-    	
+		yearDropdown.setValue(Integer.toString(currentAlbum.getYear()));
+	
+		//set genre field
+		genreField.setText(currentAlbum.getGenre());
+	
 		//set record label field
-    		recordField.setText(currentAlbum.getLabel());
-	
+		recordField.setText(currentAlbum.getLabel());
+
 		//set length field
-    		lengthField.setText(currentAlbum.getLength());
-	
+		lengthField.setText(currentAlbum.getLength());
+
 		//set rating 
-    		ratingDropdown.setValue(currentAlbum.getRating());
-    	
-    		//song list - TODO
-    		songList.setItems(FXCollections.observableList(currentAlbum.getSongs()));
+		ratingDropdown.setValue(currentAlbum.getRating());
+	
+		//song list - TODO
+		songList.setItems(FXCollections.observableList(currentAlbum.getSongs()));
     }
+    
+    public void setAlbumList(ListView<Album> albums) {
+    		albumList.setItems(albums.getItems());
+    		
+    		ObservableList<Album> allAlbums = AlbumList.getSample();
+    		albumList.getItems().addAll(allAlbums);
+    		albumList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    		
+    		albumList.getSelectionModel().selectedItemProperty().addListener((obValue, oldVal, newVal)-> {
+    			System.out.println("Selected: " + newVal.getName());
+    			this.setValues(newVal);
+    		});
+    		albumList.getSelectionModel().selectFirst();
+    		albumList.setCellFactory(l -> new AlbumCell());
+    		
+    }
+    
+    private class AlbumCell extends ListCell<Album> {
+		private HBox row;
+		private VBox label;
+		private ImageView art;
+		private Label title;
+		private Label artist;
+		
+		public AlbumCell() {
+			row = new HBox(10);
+			label = new VBox();
+			art = new ImageView();
+			title = new Label();
+			title.setStyle("-fx-font-size: 15; -fx-font-weight: bold;");
+			artist = new Label();
+			artist.setStyle("-fx-font-size: 10; -fx-font-style: italic;");
+			row.getChildren().addAll(art,label);
+			label.getChildren().addAll(title, artist);
+		}
+		@Override
+		public void updateItem(Album p, boolean empty) {
+			super.updateItem(p, empty);
+			if(empty) {
+				setText(null);
+	            setGraphic(null);
+			}
+			else {
+				makeRow(p);
+				setGraphic(row);
+			}
+		}
+		
+		private void makeRow(Album p) {
+			art.setImage(p.getImage());
+			shrinkImage(art);
+			
+			//USE THIS FOR IMAGE ACCESSIBILITY ON CENTER PANE
+			//art.setAccessibleText("Image of the album art for " + p.getName() + " by " + p.getArtist());
+			//art.setFocusTraversable(true);
+			
+			title.setText(p.getName());
+			artist.setText("by " + p.getArtist());
+			
+		}
+		private void shrinkImage(ImageView i) {
+			i.setFitWidth(30);
+			i.setPreserveRatio(true);
+			
+		}
+	}
 }
