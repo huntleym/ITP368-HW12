@@ -1,6 +1,7 @@
 package application;
 	
 import java.io.IOException;
+import java.util.Locale;
 
 import controller.AlbumPageController;
 import javafx.application.Application;
@@ -18,8 +19,11 @@ public class aaroncle_huntleym_MainApp extends Application {
 	private ListView<Album> list;
 	private Album currentAlbum;
 	
+	private ObservableList<Album> albumList;
+	
 	@Override
 	public void start(Stage primaryStage) {
+
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/view/AlbumPage.fxml"));
@@ -53,4 +57,5 @@ public class aaroncle_huntleym_MainApp extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+
 }

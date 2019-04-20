@@ -1,5 +1,10 @@
 package controller;
 
+
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
 import application.aaroncle_huntleym_MainApp;
 //import application.aaroncle_huntleym_MainApp.AlbumCell;
 import javafx.collections.FXCollections;
@@ -25,6 +30,9 @@ public class AlbumPageController {
 	private ListView<Album> list;
 	
 	private Stage prevStage;
+	
+	private Album currentAlbum;
+	private ObservableList<Album> allAlbums;
 	
 	public AlbumPageController() {
 		
@@ -76,7 +84,7 @@ public class AlbumPageController {
 	
 	//rating field
 	@FXML
-	private ChoiceBox<Integer> ratingDropdown; 
+	private ChoiceBox<String> ratingDropdown; 
 	
 	//song list
 	@FXML
@@ -88,13 +96,67 @@ public class AlbumPageController {
 	private Album currAlbum;
 	ObservableList<Album> allAlbums;
 	
-	/*
-    @FXML
-    private ComboBox<String> lightCB;
-    */
+	@FXML
+	private Label headerLabel;
+	
+	@FXML
+	private Label chooseLabel;
+	
+	@FXML
+	private Label nameLabel;
+	
+	@FXML
+	private Label descriptionLabel;
+	
+	@FXML
+	private Label artistLabel;
+	
+	@FXML
+	private Label genreLabel;
+	
+	@FXML
+	private Label recordLabel;
+	
+	@FXML
+	private Label lengthLabel;
+	
+	@FXML
+	private Label ratingLabel;
+	
+	@FXML
+	private Label songsLabel;
+	
+	@FXML
+	private Label yearReleased;
     
     //this gets automatically called after the fields are injected
     public void initialize() {
+    		
+    		
+    		ResourceBundle me = ResourceBundle.getBundle("bundles.labels", Locale.getDefault());
+    		
+    		System.out.println(me.getString("header"));
+    		System.out.println(me.getString("name"));
+    		System.out.println(me.getString("artist"));
+    		
+    		//set values for labels based on locale
+    		if (headerLabel == null) {
+    			System.out.println("Header label null");
+    		}
+    		
+    		headerLabel.setText(me.getString("header"));
+    		nameLabel.setText(me.getString("name"));
+    		descriptionLabel.setText(me.getString("description"));
+    		artistLabel.setText(me.getString("artist"));
+    		yearReleased.setText(me.getString("year"));
+    		genreLabel.setText(me.getString("genre"));
+    		recordLabel.setText(me.getString("record"));
+    		lengthLabel.setText(me.getString("length"));
+    		ratingLabel.setText(me.getString("rating"));
+    		songsLabel.setText(me.getString("tracks"));
+    		chooseLabel.setText(me.getString("choose"));
+    		saveBtn.setText(me.getString("save"));
+    	
     		
     		if (myGame == null) {
     			System.out.print("main is null");
@@ -112,7 +174,10 @@ public class AlbumPageController {
     		yearDropdown.setValue("1970");
     		
     		//add rating values to dropdown
-    		ratingDropdown.getItems().addAll(1, 2, 3, 4, 5);
+
+    		ratingDropdown.getItems().addAll("1", "2", "3", "4", "5");
+    		//ratingDropdown.setValue(1);
+
     		ratingDropdown.setValue(null);
 
     		allAlbums = AlbumList.getSample();
@@ -124,6 +189,57 @@ public class AlbumPageController {
     }
     
     private void saveEdits() {
+
+    		//grab values of everything and save it
+    		//set name field
+      /*
+		String nameText = nameField.getText();
+		System.out.println(nameText);
+
+		//set description field
+		String descriptionText = descriptionField.getText();
+		System.out.println(descriptionText);
+
+		//set artist field
+		String artistText = artistField.getText();
+		System.out.println(artistText);
+
+		//set year released
+		String yearText = yearDropdown.getValue();
+		System.out.println(yearText);
+	
+		//set genre field
+		String genreText = genreField.getText();
+		System.out.println(genreText);
+	
+		//set record label field
+		String recordText = recordField.getText();
+		System.out.println(recordText);
+
+		//set length field
+		String lengthText = lengthField.getText();
+		System.out.println(lengthText);
+
+		//set rating 
+		String rating = ratingDropdown.getValue();
+		System.out.println(rating);
+		
+		//add to the album list
+		for (Album a : allAlbums) {
+			if (a == currentAlbum) {
+				a.setName(nameText);
+				a.setDescription(descriptionText);
+				a.setArtist(artistText);
+				a.setYear(Integer.parseInt(yearText));
+				a.setGenre(genreText);
+				a.setLabel(recordText);
+				a.setLength(lengthText);
+				a.setRating(Integer.parseInt(rating));
+				break;
+			}
+		}
+    */
+
     	//update name
     	currAlbum.setName(nameField.getText());
 
@@ -149,6 +265,7 @@ public class AlbumPageController {
 		if (ratingDropdown.getValue() != null) currAlbum.setRating(ratingDropdown.getValue());
 		
 		setAlbumList(albumList);
+
     }
     
     private void closeView() {
@@ -183,26 +300,41 @@ public class AlbumPageController {
 		lengthField.setText(currAlbum.getLength());
 
 		//set rating 
+
+		//ratingDropdown.setValue(Integer.toString(currentAlbum.getRating()));
+
 		if (currAlbum.getRating() == 0) ratingDropdown.setValue(null);
 		else ratingDropdown.setValue(currAlbum.getRating());
+
 	
 		//song list - TODO
 		songList.setItems(FXCollections.observableList(currAlbum.getSongs()));
     }
     
     public void setAlbumList(ListView<Album> albums) {
-    		albumList.setItems(albums.getItems());
+    		//albumList.setItems(albums.getItems());
     		
+
+    		//allAlbums = AlbumList.getSample();
+
     		albumList.getItems().clear();
+
     		albumList.getItems().addAll(allAlbums);
     		albumList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     		
     		albumList.getSelectionModel().selectedItemProperty().addListener((obValue, oldVal, newVal)-> {
+
+    			System.out.println("Selected: " + newVal.getName());
+    			//this.currentAlbum = newVal;
+    			//this.setValues(newVal);
+
     			if (newVal != null) {
 	    			currAlbum = newVal;
 	    			setValues();
     			}
+
     		});
+    		albumList.setEditable(true);
     		albumList.getSelectionModel().selectFirst();
     		albumList.setCellFactory(l -> new AlbumCell());
     }

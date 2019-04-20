@@ -16,7 +16,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AlbumPageController">
    <top>
-      <Label text="Album Page" BorderPane.alignment="CENTER">
+      <Label fx:id="headerLabel" text="Album Page" BorderPane.alignment="CENTER">
          <font>
             <Font size="36.0" />
          </font>
@@ -28,7 +28,11 @@
    <left>
       <VBox prefHeight="490.0" prefWidth="275.0" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="12.0" prefWidth="103.0" text="Choose an album:">
+
+            <!-- <Label fx:id="chooseLabel" text="Choose an album:"> -->
+
+            <Label fx:id="chooseLabel" prefHeight="12.0" prefWidth="103.0" text="Choose an album:">
+
                <padding>
                   <Insets bottom="4.0" left="4.0" right="4.0" />
                </padding>
@@ -56,7 +60,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="233.0">
                <children>
-                  <Label text="Name">
+                  <Label fx:id="nameLabel" text="Name">
                      <padding>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                      </padding>
@@ -69,10 +73,14 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="233.0">
                <children>
-                  <Label prefHeight="25.0" prefWidth="73.0" text="Description">
+
+                  <!-- <Label fx:id="descriptionLabel" text="Description" /> -->
+
+                  <Label fx:id="descriptionLabel" prefHeight="25.0" prefWidth="73.0" text="Description">
                      <padding>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                      </padding></Label>
+
                </children>
                <padding>
                   <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
@@ -84,7 +92,7 @@
                </VBox.margin></TextArea>
             <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="233.0">
                <children>
-                  <Label text="Artist">
+                  <Label fx:id="artistLabel" text="Artist">
                      <padding>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                      </padding></Label>
@@ -96,7 +104,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <Label text="Year released">
+                  <Label fx:id="yearReleased" text="Year released">
                      <padding>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                      </padding></Label>
@@ -108,7 +116,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <Label text="Genre">
+                  <Label fx:id="genreLabel" text="Genre">
                      <padding>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                      </padding></Label>
@@ -120,7 +128,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <Label text="Record label">
+                  <Label fx:id="recordLabel" text="Record label">
                      <padding>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                      </padding></Label>
@@ -132,7 +140,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <Label text="Length">
+                  <Label fx:id="lengthLabel" text="Length">
                      <padding>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                      </padding></Label>
@@ -144,7 +152,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0">
                <children>
-                  <Label text="Rating">
+                  <Label fx:id="ratingLabel" text="Rating">
                      <padding>
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                      </padding></Label>
@@ -154,7 +162,7 @@
                   <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                </padding>
             </HBox>
-            <Label text="Track list:">
+            <Label fx:id="songsLabel" text="Track list:">
                <padding>
                   <Insets bottom="4.0" left="7.0" right="7.0" top="4.0" />
                </padding>
