@@ -1,6 +1,7 @@
 package application;
 	
 import java.io.IOException;
+import java.util.Locale;
 
 import controller.AlbumPageController;
 import javafx.application.Application;
@@ -26,9 +27,10 @@ public class aaroncle_huntleym_MainApp extends Application {
 	private ListView<Album> list;
 	private Album currentAlbum;
 	
+	private ObservableList<Album> albumList;
+	
 	@Override
 	public void start(Stage primaryStage) {
-		
 		
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -79,7 +81,7 @@ public class aaroncle_huntleym_MainApp extends Application {
 	}
 	
 	private void setUpListView() {
-		ObservableList<Album> albumList = AlbumList.getSample();
+		albumList = AlbumList.getSample();
 		list.getItems().addAll(albumList);
 		list.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
