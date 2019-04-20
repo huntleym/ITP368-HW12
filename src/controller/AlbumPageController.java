@@ -91,6 +91,9 @@ public class AlbumPageController {
     public void initialize() {
     		//set values (Album)
     		//setValues(myGame.getCurrentAlbum());
+    		if (myGame == null) {
+    			System.out.print("main is null");
+    		}
     		
     		//set album list - TODO
     	
