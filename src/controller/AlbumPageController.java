@@ -1,5 +1,6 @@
 package controller;
 
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ import model.AlbumList;
 
 public class AlbumPageController {
 	private aaroncle_huntleym_MainApp myGame; //reference to the main application
+	private ListView<Album> list;
 	
 	private Stage prevStage;
 	
@@ -91,11 +93,8 @@ public class AlbumPageController {
 	@FXML
 	private Button saveBtn;
 	
-	@FXML
-	private Button okBtn;
-	
-	@FXML
-	private Button cancelBtn;
+	private Album currAlbum;
+	ObservableList<Album> allAlbums;
 	
 	@FXML
 	private Label headerLabel;
@@ -162,6 +161,9 @@ public class AlbumPageController {
     		if (myGame == null) {
     			System.out.print("main is null");
     		}
+    		
+    		//allow descriptions to wrap
+    		descriptionField.setWrapText(true);
     	
     		//add year values to dropdown
     		yearDropdown.getItems().addAll("1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969",
@@ -172,30 +174,25 @@ public class AlbumPageController {
     		yearDropdown.setValue("1970");
     		
     		//add rating values to dropdown
+
     		ratingDropdown.getItems().addAll("1", "2", "3", "4", "5");
     		//ratingDropdown.setValue(1);
+
+    		ratingDropdown.setValue(null);
+
+    		allAlbums = AlbumList.getSample();
     		
     		//save button -- saves all the edits
     		saveBtn.setOnAction(ae ->{
     			saveEdits();
-    		
-    		});
-    		
-    		//ok button -- saves and closes so they can add another album
-    		okBtn.setOnAction(ae -> {
-    			saveEdits();
-    			closeView();
-    		});
-    		
-    		//cancel button -- just closes
-    		cancelBtn.setOnAction(ae -> {
-    			closeView();
     		});
     }
     
     private void saveEdits() {
+
     		//grab values of everything and save it
     		//set name field
+      /*
 		String nameText = nameField.getText();
 		System.out.println(nameText);
 
@@ -241,62 +238,105 @@ public class AlbumPageController {
 				break;
 			}
 		}
+    */
+
+    	//update name
+    	currAlbum.setName(nameField.getText());
+
+		//update description
+    	currAlbum.setDescription(descriptionField.getText());
+
+		//update artist
+    	currAlbum.setArtist(artistField.getText());
+
+		//update year released
+    	currAlbum.setYear(Integer.parseInt(yearDropdown.getValue()));
+	
+		//update genre
+    	currAlbum.setGenre(genreField.getText());
+	
+		//update record label
+    	currAlbum.setLabel(recordField.getText());
+    	
+    	//update length
+    	currAlbum.setLength(lengthField.getText());
+
+		//update rating 
+		if (ratingDropdown.getValue() != null) currAlbum.setRating(ratingDropdown.getValue());
+		
+		setAlbumList(albumList);
+
     }
     
     private void closeView() {
     	
     }
     
-    public void setValues(Album currentAlbum) {
+    public void setValues() {
 		//set album image
-		albumImg.setImage(currentAlbum.getImage());
-		albumImg.setAccessibleText("Image of the album art for " + currentAlbum.getName() + " by " + currentAlbum.getArtist());
+		albumImg.setImage(currAlbum.getImage());
+		albumImg.setAccessibleText("Image of the album art for " + currAlbum.getName() + " by " + currAlbum.getArtist());
 		albumImg.setFocusTraversable(true);
 	
 		//set name field
-		nameField.setText(currentAlbum.getName());
+		nameField.setText(currAlbum.getName());
 
 		//set description field
-		descriptionField.setText(currentAlbum.getDescription());
+		descriptionField.setText(currAlbum.getDescription());
 
 		//set artist field
-		artistField.setText(currentAlbum.getArtist());
+		artistField.setText(currAlbum.getArtist());
 
 		//set year released
-		yearDropdown.setValue(Integer.toString(currentAlbum.getYear()));
+		yearDropdown.setValue(Integer.toString(currAlbum.getYear()));
 	
 		//set genre field
-		genreField.setText(currentAlbum.getGenre());
+		genreField.setText(currAlbum.getGenre());
 	
 		//set record label field
-		recordField.setText(currentAlbum.getLabel());
+		recordField.setText(currAlbum.getLabel());
 
 		//set length field
-		lengthField.setText(currentAlbum.getLength());
+		lengthField.setText(currAlbum.getLength());
 
 		//set rating 
-		ratingDropdown.setValue(Integer.toString(currentAlbum.getRating()));
+
+		//ratingDropdown.setValue(Integer.toString(currentAlbum.getRating()));
+
+		if (currAlbum.getRating() == 0) ratingDropdown.setValue(null);
+		else ratingDropdown.setValue(currAlbum.getRating());
+
 	
 		//song list - TODO
-		songList.setItems(FXCollections.observableList(currentAlbum.getSongs()));
+		songList.setItems(FXCollections.observableList(currAlbum.getSongs()));
     }
     
     public void setAlbumList(ListView<Album> albums) {
     		//albumList.setItems(albums.getItems());
     		
-    		allAlbums = AlbumList.getSample();
+
+    		//allAlbums = AlbumList.getSample();
+
+    		albumList.getItems().clear();
+
     		albumList.getItems().addAll(allAlbums);
     		albumList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     		
     		albumList.getSelectionModel().selectedItemProperty().addListener((obValue, oldVal, newVal)-> {
+
     			System.out.println("Selected: " + newVal.getName());
-    			this.currentAlbum = newVal;
-    			this.setValues(newVal);
+    			//this.currentAlbum = newVal;
+    			//this.setValues(newVal);
+
+    			if (newVal != null) {
+	    			currAlbum = newVal;
+	    			setValues();
+    			}
+
     		});
     		albumList.setEditable(true);
     		albumList.getSelectionModel().selectFirst();
     		albumList.setCellFactory(l -> new AlbumCell());
-    		
     }
     
     private class AlbumCell extends ListCell<Album> {
@@ -307,6 +347,7 @@ public class AlbumPageController {
 		private Label artist;
 		
 		public AlbumCell() {
+			this.setEditable(true);
 			row = new HBox(10);
 			label = new VBox();
 			art = new ImageView();
@@ -333,10 +374,6 @@ public class AlbumPageController {
 		private void makeRow(Album p) {
 			art.setImage(p.getImage());
 			shrinkImage(art);
-			
-			//USE THIS FOR IMAGE ACCESSIBILITY ON CENTER PANE
-			//art.setAccessibleText("Image of the album art for " + p.getName() + " by " + p.getArtist());
-			//art.setFocusTraversable(true);
 			
 			title.setText(p.getName());
 			artist.setText("by " + p.getArtist());
