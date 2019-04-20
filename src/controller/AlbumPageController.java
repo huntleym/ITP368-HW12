@@ -30,7 +30,7 @@ public class AlbumPageController {
 
 	//list of albums
 	@FXML
-	private ListView albumList;
+	private ListView<Album> albumList;
 	
 	//image view
 	@FXML
@@ -70,7 +70,7 @@ public class AlbumPageController {
 	
 	//song list
 	@FXML
-	private ListView songList;
+	private ListView<String> songList;
 	
 	@FXML
 	private Button saveBtn;
@@ -88,13 +88,10 @@ public class AlbumPageController {
     
     //this gets automatically called after the fields are injected
     public void initialize() {
-    		//set values (Album)
-    		//setValues(myGame.getCurrentAlbum());
+    		
     		if (myGame == null) {
     			System.out.print("main is null");
     		}
-    		
-    		//set album list - TODO
     	
     		//add year values to dropdown
     		yearDropdown.getItems().addAll("1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969",
@@ -107,12 +104,10 @@ public class AlbumPageController {
     		//add rating values to dropdown
     		ratingDropdown.getItems().addAll(1, 2, 3, 4, 5);
     		ratingDropdown.setValue(1);
-        	
-    		//song list - TODO
     		
     		//save button -- saves all the edits
     		saveBtn.setOnAction(ae ->{
-    			
+    			saveEdits();
     		
     		});
     		
@@ -127,24 +122,45 @@ public class AlbumPageController {
     		});
     }
     
+    private void saveEdits() {
+    		//grab values of everything and save it
+    }
+    
+    
+    
+    public void setAlbumList(ListView<Album> albums) {
+    		albumList.setItems(albums.getItems());
+    }
+    
     public void setValues(Album currentAlbum) {
-    	//set album view
-    	
+    		//set album image
+    		albumImg.setImage(currentAlbum.getImage());
     	
 		//set name field
+    		nameField.setText(currentAlbum.getName());
 	
 		//set description field
+    		descriptionField.setText(currentAlbum.getDescription());
 	
 		//set artist field
+    		artistField.setText(currentAlbum.getArtist());
 	
 		//set year released
+    		yearDropdown.setValue(Integer.toString(currentAlbum.getYear()));
     	
     		//set genre field
+    		genreField.setText(currentAlbum.getGenre());
     	
 		//set record label field
+    		recordField.setText(currentAlbum.getLabel());
 	
 		//set length field
+    		lengthField.setText(currentAlbum.getLength());
 	
 		//set rating 
+    		ratingDropdown.setValue(currentAlbum.getRating());
+    	
+    		//song list - TODO
+    		//songList.setItems(currentAlbum.getSongs());
     }
 }

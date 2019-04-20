@@ -28,10 +28,7 @@ public class aaroncle_huntleym_MainApp extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
-		list = new ListView<>();
-		setUpListView();
-		list.setPrefWidth(300);
-		list.setPrefHeight(300);
+		
 		
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -43,12 +40,22 @@ public class aaroncle_huntleym_MainApp extends Application {
 				System.out.println("controller null");
 			}
 			
-			AlbumPageController apc = loader.getController();
-			apc.setMainApp(this);
-			apc.setPrevStage(primaryStage);
+			controller = loader.getController();
+			controller.setMainApp(this);
+			controller.setPrevStage(primaryStage);
 			
-			//Pane mainPane = new Pane();
+			list = new ListView<>();
+			setUpListView();
+			list.setPrefWidth(300);
+			list.setPrefHeight(300);
+			
+			//set album list
+			controller.setAlbumList(list);
 			//root.getChildren().add(list);
+			
+			//set values of the current album
+    			//controller.setValues();
+			
 
 			Scene scene = new Scene(root); //800,600
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
