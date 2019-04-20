@@ -32,7 +32,7 @@ public class AlbumPageController {
 	private Stage prevStage;
 	
 	private Album currentAlbum;
-	private ObservableList<Album> allAlbums;
+	//private ObservableList<Album> allAlbums;
 	
 	public AlbumPageController() {
 		
@@ -262,7 +262,7 @@ public class AlbumPageController {
     	currAlbum.setLength(lengthField.getText());
 
 		//update rating 
-		if (ratingDropdown.getValue() != null) currAlbum.setRating(ratingDropdown.getValue());
+		if (ratingDropdown.getValue() != null) currAlbum.setRating(Integer.parseInt(ratingDropdown.getValue()));
 		
 		setAlbumList(albumList);
 
@@ -304,7 +304,7 @@ public class AlbumPageController {
 		//ratingDropdown.setValue(Integer.toString(currentAlbum.getRating()));
 
 		if (currAlbum.getRating() == 0) ratingDropdown.setValue(null);
-		else ratingDropdown.setValue(currAlbum.getRating());
+		else ratingDropdown.setValue(Integer.toString(currAlbum.getRating()));
 
 	
 		//song list - TODO
@@ -324,11 +324,12 @@ public class AlbumPageController {
     		
     		albumList.getSelectionModel().selectedItemProperty().addListener((obValue, oldVal, newVal)-> {
 
-    			System.out.println("Selected: " + newVal.getName());
+    			
     			//this.currentAlbum = newVal;
     			//this.setValues(newVal);
 
     			if (newVal != null) {
+    				System.out.println("Selected: " + newVal.getName());
 	    			currAlbum = newVal;
 	    			setValues();
     			}

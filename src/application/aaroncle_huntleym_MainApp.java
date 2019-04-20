@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import controller.AlbumPageController;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
