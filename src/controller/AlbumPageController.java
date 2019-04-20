@@ -1,6 +1,9 @@
 package controller;
 
+import java.util.stream.Collectors;
+
 import application.aaroncle_huntleym_MainApp;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -161,6 +164,6 @@ public class AlbumPageController {
     		ratingDropdown.setValue(currentAlbum.getRating());
     	
     		//song list - TODO
-    		//songList.setItems(currentAlbum.getSongs());
+    		songList.setItems(FXCollections.observableList(currentAlbum.getSongs()));
     }
 }
